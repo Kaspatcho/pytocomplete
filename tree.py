@@ -26,7 +26,9 @@ def get_words(node: Tree, prefix: str = None) -> str:
     words = []
 
     for letter, child in node.children.items():
-        words.append(get_words(child, prefix + letter))
+        possible_words = get_words(child, prefix + letter)
+        if isinstance(possible_words, list): words += possible_words
+        else: words.append(possible_words)
 
     if len(words) < 2: return words[0]
     return words
@@ -61,5 +63,5 @@ if __name__ == '__main__':
     root = insert_text(root, 'hola')
     root = insert_text(root, 'pedra')
     root = insert_text(root, 'pedro')
-    possible_words = text_search(root, 'pedr')
+    possible_words = text_search(root, 'h')
     print(possible_words)
