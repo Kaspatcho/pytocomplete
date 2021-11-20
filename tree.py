@@ -22,5 +22,7 @@ def insert_text(root: Tree, text: str) -> Tree:
 if __name__ == '__main__':
     root = Tree()
     root = insert_text(root, 'hello')
-    root = insert_text(root, 'helium2')
+    root = insert_text(root, 'helium')
+    root = insert_text(root, 'pedra')
+    root = insert_text(root, 'pedro')
     print(root)
