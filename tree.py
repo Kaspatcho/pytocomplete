@@ -2,6 +2,7 @@ from typing import Dict, Optional
 
 class Tree:
     def __init__(self) -> None:
+        self.end_word = False
         self.children: Dict[str, Tree] = {}
 
     def get(self, letter: str) -> Optional['Tree']:
@@ -9,7 +10,9 @@ class Tree:
 
 
 def insert_text(root: Tree, text: str) -> Tree:
-    if text == '': return root
+    if text == '':
+        root.end_word = True
+        return root
 
     letter = text[0]
     if root.children.get(letter) is None: root.children[letter] = Tree()
@@ -27,6 +30,8 @@ def get_words(node: Tree, prefix: str = None) -> str:
 
     for letter, child in node.children.items():
         possible_words = get_words(child, prefix + letter)
+        if node.end_word: words.append(prefix)
+
         if isinstance(possible_words, list): words += possible_words
         else: words.append(possible_words)
 
@@ -61,7 +66,9 @@ if __name__ == '__main__':
     root = insert_text(root, 'hello')
     root = insert_text(root, 'helium')
     root = insert_text(root, 'hola')
-    root = insert_text(root, 'pedra')
     root = insert_text(root, 'pedro')
-    possible_words = text_search(root, 'h')
+    root = insert_text(root, 'pedra')
+    root = insert_text(root, 'pedrita')
+    root = insert_text(root, 'pedroso')
+    possible_words = text_search(root, 'ped')
     print(possible_words)
