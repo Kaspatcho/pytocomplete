@@ -1,12 +1,16 @@
 import readline
-from os import system
+from os import system, listdir
 from sys import argv
 from typing import List, Union
 from tree import Tree, text_search, insert_text
 
+no_shell = any((arg == '-s' for arg in argv))
 root = Tree()
 
-no_shell = any((arg == '-s' for arg in argv))
+if not no_shell:
+    programs = listdir('/bin')
+    for program in programs: insert_text(root, program)
+
 
 def complete_word(text: str, state: int) -> Union[List[str], str, None]:
     options = text_search(root, text)
