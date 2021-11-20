@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 class Tree:
     def __init__(self) -> None:
@@ -22,14 +22,22 @@ def insert_text(root: Tree, text: str) -> Tree:
     return root
 
 
-def get_words(node: Tree, prefix: str = None) -> str:
+def get_words_from_subtree(node: Tree, prefix: str = None) -> Union[str, List[str]]:
+    '''
+    returns all words in subtree `node` for given `prefix`
+
+    Parameters:
+        node   (Tree):   subtree to get words from
+        prefix (str):    prefix to start word
+    '''
+
     if prefix is None: prefix = ''
     if len(node.children) < 1: return prefix
 
     words = []
 
     for letter, child in node.children.items():
-        possible_words = get_words(child, prefix + letter)
+        possible_words = get_words_from_subtree(child, prefix + letter)
         if node.end_word: words.append(prefix)
 
         if isinstance(possible_words, list): words += possible_words
@@ -40,6 +48,15 @@ def get_words(node: Tree, prefix: str = None) -> str:
 
 
 def text_search(node: Tree, search: str, prefix: str = None) -> List[str]:
+    '''
+    returns all possible words in `node` for given `search`
+
+    Parameters:
+        node   (Tree):   root tree to search words
+        search (str):    string to be searched in tree
+        prefix (str):    prefix to start word
+    '''
+
     if prefix is None: prefix = ''
     root = node
 
@@ -54,7 +71,7 @@ def text_search(node: Tree, search: str, prefix: str = None) -> List[str]:
     all_words = []    
 
     for key, child in node.children.items():
-        words = get_words(child, prefix + key)
+        words = get_words_from_subtree(child, prefix + key)
         if isinstance(words, list): all_words += words
         else: all_words.append(words)
 
@@ -66,9 +83,9 @@ if __name__ == '__main__':
     root = insert_text(root, 'hello')
     root = insert_text(root, 'helium')
     root = insert_text(root, 'hola')
-    root = insert_text(root, 'pedro')
-    root = insert_text(root, 'pedra')
-    root = insert_text(root, 'pedrita')
-    root = insert_text(root, 'pedroso')
-    possible_words = text_search(root, 'ped')
+    root = insert_text(root, 'metal')
+    root = insert_text(root, 'mist')
+    root = insert_text(root, 'mercury')
+
+    possible_words = text_search(root, 'me')
     print(possible_words)
