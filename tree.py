@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 class Tree:
     def __init__(self) -> None:
@@ -39,7 +39,7 @@ def get_words(node: Tree, prefix: str = None) -> str:
     return words
 
 
-def text_search(node: Tree, search: str, prefix: str = None) -> None:
+def text_search(node: Tree, search: str, prefix: str = None) -> List[str]:
     if prefix is None: prefix = ''
     root = node
 
