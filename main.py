@@ -1,4 +1,5 @@
 import readline
+from os import system
 from tree import Tree, text_search, insert_text
 
 root = Tree()
@@ -14,6 +15,7 @@ readline.set_completer(completer)
 readline.parse_and_bind("tab: complete")
 
 while True:
-    value = input("> ")
-    print("You entered", value)
-    insert_text(root, value)
+    value = input("$ ")
+    word = value.split(' ')[0]
+    insert_text(root, word)
+    system(value)
